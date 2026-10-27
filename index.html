@@ -75,6 +75,7 @@ section { display: flex; flex-direction: column; gap: 18px; }
 .details .v small { display: block; font-family: var(--font-body); font-size: 0.85rem; color: var(--cream-soft); margin-top: 4px; line-height: 1.45; }
 .details strong { font-weight: 500; }
 .note-time { color: var(--amber); }
+.details .v small.deposit-note { color: var(--gold); }
 
 .actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .btn {
@@ -225,7 +226,7 @@ details.menu[open] summary .chev { transform: rotate(45deg); }
       <li><span class="k">Date</span><span class="v">Saturday, 5th December 2026</span></li>
       <li><span class="k">Time</span><span class="v">4:30 pm<small class="note-time">Please come on time, so we catch the sunset together.</small></span></li>
       <li><span class="k">Venue</span><span class="v">Koko Bay<small>Bali-inspired beach restaurant, Palm West Beach, Dubai</small></span></li>
-      <li><span class="k">Price</span><span class="v"><strong>AED 275</strong> per person<small>Three-course set menu. Drinks are not included and are paid separately.</small></span></li>
+      <li><span class="k">Price</span><span class="v"><strong>AED 275</strong> per person<small>Three-course set menu. Drinks are not included and are paid separately.</small><small class="deposit-note">A deposit of <strong>AED 137.50</strong> is needed by 3pm, Saturday 28th November to reserve your place.</small></span></li>
     </ul>
     <div class="actions">
       <a class="btn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Toni%27s%20Baby%20Blessing%20Dinner&amp;dates=20261205T163000%2F20261205T193000&amp;ctz=Asia%2FDubai&amp;location=Koko%20Bay%2C%20Palm%20West%20Beach%2C%20Dubai&amp;details=Dinner%20at%20sunset%20for%20Toni.%20Please%20arrive%20at%204%3A30pm.%20Dress%20code%3A%20Golden%20Hour%20Whimsy.%20Deposit%20AED%20137.50%20to%20Emily%20by%20Sat%2028%20Nov%2C%203pm.">
@@ -314,7 +315,7 @@ details.menu[open] summary .chev { transform: rotate(45deg); }
       <p>Tap below to RSVP. It takes under a minute, and you can tell us whether you've paid your deposit.</p>
       <div class="row">
         <a class="btn btn-big" target="_blank" rel="noopener" href="https://forms.gle/dPCa7uEKFYnGA4mBA">RSVP now</a>
-        <a class="btn ghost-dark" id="wa-rsvp" target="_blank" rel="noopener" href="https://wa.me/971585758731">RSVP on WhatsApp instead</a>
+        <a class="btn ghost-dark" id="wa-rsvp" target="_blank" rel="noopener" href="https://wa.me/971585758731">WhatsApp</a>
       </div>
       <p class="hint">Paid after you RSVP'd? Fill in the form again with the same name and choose Yes for the deposit.</p>
     </div>
