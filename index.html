@@ -160,6 +160,29 @@ details.menu[open] summary .chev { transform: rotate(45deg); }
 .contact-num .v { font-family: var(--font-display); font-size: 1.6rem; line-height: 1.1; font-variant-numeric: tabular-nums; user-select: all; }
 .contact-actions { display: flex; gap: 8px; }
 .wa-link { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+.rsvp-form { display: flex; flex-direction: column; gap: 14px; }
+.rsvp-form .field { display: flex; flex-direction: column; gap: 6px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.rsvp-form label, .rsvp-form legend { font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(74,48,54,0.7); padding: 0; }
+.rsvp-form .opt { text-transform: none; letter-spacing: 0.02em; }
+.rsvp-form input[type="text"], .rsvp-form input[type="tel"] { width: 100%; min-width: 0; font: 400 1rem var(--font-body); color: var(--dusk-deep); background: #fff; border: 1px solid rgba(74,48,54,0.25); border-radius: 999px; padding: 12px 16px; }
+.rsvp-form input[aria-invalid="true"] { border-color: #b3261e; }
+.rsvp-form .choice { display: flex; flex-wrap: wrap; gap: 8px; }
+.rsvp-form .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.rsvp-form .choice label { font: 400 0.9rem/1 var(--font-body); letter-spacing: 0.02em; text-transform: none; color: var(--dusk-deep); border: 1px solid rgba(74,48,54,0.3); background: #fff; border-radius: 999px; padding: 12px 16px; cursor: pointer; }
+.rsvp-form .choice input:checked + label { background: var(--dusk-deep); color: var(--cream); border-color: var(--dusk-deep); }
+.rsvp-form .choice input:focus-visible + label { outline: 2px solid #a5623e; outline-offset: 2px; }
+.rsvp-form .choice.invalid label { border-color: #b3261e; }
+.rsvp-form .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.rsvp-form button[disabled] { opacity: 0.6; cursor: progress; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form-status { margin: 0; font-size: 0.92rem; line-height: 1.5; border-radius: 6px; padding: 12px 14px; background: #fff6ea; border-left: 3px solid #a5623e; }
+.form-status.ok { border-left-color: #2e7d45; background: #eef7ef; }
+.form-status.err { border-left-color: #b3261e; background: #fbecec; }
+.rsvp-cta { display: flex; flex-direction: column; gap: 12px; }
+.rsvp-cta p { margin: 0; }
+.rsvp-cta .row { display: flex; gap: 10px; flex-wrap: wrap; }
+.rsvp-cta .hint { font-size: 0.85rem; color: rgba(74,48,54,0.75); }
+.rsvp .btn.btn-big { font-size: 0.9rem; padding: 16px 28px; }
 .preview-msg { font-size: 0.86rem; background: #fff6ea; border-radius: 6px; padding: 12px 14px; white-space: pre-line; color: rgba(74,48,54,0.85); }
 
 .closing { text-align: center; display: flex; flex-direction: column; gap: 18px; align-items: center; }
@@ -287,6 +310,15 @@ details.menu[open] summary .chev { transform: rotate(45deg); }
     <p class="eyebrow">RSVP &amp; deposit</p>
     <h2 id="h-rsvp">Please let Emily know if you'll be joining us</h2>
 
+    <div class="rsvp-cta">
+      <p>Tap below to RSVP. It takes under a minute, and you can tell us whether you've paid your deposit.</p>
+      <div class="row">
+        <a class="btn btn-big" target="_blank" rel="noopener" href="https://forms.gle/dPCa7uEKFYnGA4mBA">RSVP now</a>
+        <a class="btn ghost-dark" id="wa-rsvp" target="_blank" rel="noopener" href="https://wa.me/971585758731">RSVP on WhatsApp instead</a>
+      </div>
+      <p class="hint">Paid after you RSVP'd? Fill in the form again with the same name and choose Yes for the deposit.</p>
+    </div>
+
     <div class="contact">
       <div class="contact-num">
         <span class="k">Emily's number</span>
@@ -316,17 +348,6 @@ details.menu[open] summary .chev { transform: rotate(45deg); }
 
     <p class="warn">If your deposit is not received by the deadline, we will assume you're unable to attend and your place will not be reserved.</p>
 
-    <div class="rsvp-compose">
-      <label for="guest-name">Your name, for a ready-to-send RSVP</label>
-      <div class="row">
-        <input id="guest-name" type="text" autocomplete="name" placeholder="e.g. Amara Okafor">
-      </div>
-      <div class="row">
-        <a class="btn" id="wa-rsvp" target="_blank" rel="noopener" href="https://wa.me/971585758731">RSVP on WhatsApp</a>
-        <button class="btn ghost-dark" type="button" id="copy-rsvp">Copy message</button>
-      </div>
-      <div class="preview-msg" id="rsvp-preview" aria-live="polite"></div>
-    </div>
   </section>
 
   <footer class="closing">
@@ -392,22 +413,9 @@ details.menu[open] summary .chev { transform: rotate(45deg); }
     });
   });
 
-  var nameInput = document.getElementById("guest-name");
-  var preview = document.getElementById("rsvp-preview");
-  function message() {
-    var n = nameInput.value.trim() || "[your name]";
-    return "Hi Emily! This is " + n + ". I'd love to join Toni's Baby Blessing Dinner at Koko Bay on Saturday 5th December at 4:30pm. I'll send my AED 137.50 deposit with the reference “" + n + "” before 3pm on Saturday 28th November.";
-  }
-  var waRsvp = document.getElementById("wa-rsvp");
-  function render() {
-    preview.textContent = message();
-    waRsvp.href = "https://wa.me/971585758731?text=" + encodeURIComponent(message());
-  }
-  nameInput.addEventListener("input", render);
-  render();
-  document.getElementById("copy-rsvp").addEventListener("click", function () {
-    copy(message(), this, "Copied — paste to Emily", preview);
-  });
+  // WhatsApp fallback message
+  var waMsg = "Hi Emily! I'd love to join Toni's Baby Blessing Dinner at Koko Bay on Saturday 5th December at 4:30pm. I'll send my AED 137.50 deposit with my name as the reference before 3pm on Saturday 28th November.";
+  document.getElementById("wa-rsvp").href = "https://wa.me/971585758731?text=" + encodeURIComponent(waMsg);
 })();
 </script>
 
